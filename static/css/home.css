@@ -1,0 +1,517 @@
+/* ==============================
+   GENERAL RESET
+================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: #f7f9fc;
+    color: #333;
+    line-height: 1.6;
+}
+
+
+/* ==============================
+   HEADER & NAVIGATION
+================================= */
+
+.site-header {
+    background-color: #1b263b;
+    color: #fff;
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+.nav-container {
+    max-width: 1300px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+}
+
+.main-nav a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+}
+
+.main-nav a:hover {
+    color: #4ea8de;
+}
+
+.welcome-user {
+    color: white;
+    white-space: nowrap;
+}
+
+.btn-signup {
+    background-color: #4ea8de;
+    padding: 0.55rem 1rem;
+    border-radius: 4px;
+}
+
+.main-nav a.btn-signup:hover {
+    background-color: #3895c7;
+    color: white;
+}
+
+.main-nav a.btn-logout {
+    color: #ff6b6b;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.lang-btn,
+.menu-toggle {
+    background: transparent;
+    border: 1px solid #415a77;
+    color: #fff;
+    padding: 0.4rem 0.7rem;
+    border-radius: 4px;
+    cursor: pointer;
+    display: none;
+}
+
+
+/* ==============================
+   HERO SECTION
+================================= */
+
+.hero-section {
+    position: relative;
+    width: 100%;
+    min-height: 580px;
+    background-image: url('../images/home.png');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+    overflow: hidden;
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        rgba(0, 0, 0, 0.4),
+        rgba(0, 0, 0, 0.7)
+    );
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 850px;
+    padding: 2rem;
+}
+
+.hero-subtitle {
+    display: block;
+    font-size: 0.9rem;
+    letter-spacing: 3px;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #c9e4f5;
+}
+
+.hero-content h1 {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    color: #e2e8f0;
+    margin-bottom: 2rem;
+}
+
+.hero-btn {
+    display: inline-block;
+    background-color: #4ea8de;
+    color: #fff;
+    text-decoration: none;
+    padding: 0.9rem 2rem;
+    border-radius: 5px;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.hero-btn:hover {
+    background-color: #1b263b;
+    transform: translateY(-3px);
+}
+
+
+/* ==============================
+   SECTION HEADINGS
+================================= */
+
+.packages-section,
+.offers-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 5rem 2rem;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.sub-heading {
+    color: #4ea8de;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+}
+
+.section-header h2 {
+    font-size: 2.4rem;
+    color: #1b263b;
+    margin: 0.5rem 0;
+}
+
+.section-header p {
+    color: #64748b;
+    font-size: 1.05rem;
+    max-width: 750px;
+    margin: auto;
+}
+
+
+/* ==============================
+   EXPLORE, STAY, DINE & WELLNESS
+================================= */
+
+.content-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 5rem 2rem;
+}
+
+.content-section.alt-bg {
+    background-color: #eef3f8;
+    max-width: 100%;
+}
+
+.content-section.alt-bg .section-header,
+.content-section.alt-bg .feature-grid {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem;
+}
+
+.feature-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.75rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+}
+
+.feature-tag {
+    display: inline-block;
+    width: fit-content;
+    background-color: #e0f2fe;
+    color: #0369a1;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0.3rem 0.75rem;
+    border-radius: 20px;
+}
+
+.feature-card h3 {
+    font-size: 1.3rem;
+    color: #1b263b;
+}
+
+.feature-card p {
+    color: #64748b;
+    font-size: 0.95rem;
+    flex-grow: 1;
+}
+
+
+/* ==============================
+   OFFERS GRID
+================================= */
+
+.offers-section {
+    padding-top: 2rem;
+}
+
+.offers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem;
+}
+
+.offer-card {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+    border: 1px solid #e2e8f0;
+    position: relative;
+    transition: transform 0.3s ease,
+                box-shadow 0.3s ease;
+}
+
+.offer-card:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+}
+
+.offer-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: #4ea8de;
+    color: #fff;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border-radius: 20px;
+}
+
+.offer-content {
+    padding: 2rem;
+    padding-top: 3.5rem;
+}
+
+.offer-content h3 {
+    font-size: 1.35rem;
+    color: #1b263b;
+    margin-bottom: 0.8rem;
+}
+
+.offer-content p {
+    color: #64748b;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+}
+
+.text-link-btn {
+    display: inline-block;
+    color: #2585bd;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.text-link-btn:hover {
+    color: #1b263b;
+}
+
+
+/* ==============================
+   FOOTER
+================================= */
+
+.site-footer {
+    background-color: #1b263b;
+    color: #94a3b8;
+    padding: 4rem 2rem 1.5rem;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+    margin-bottom: 3rem;
+}
+
+.footer-col h4 {
+    color: #fff;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.footer-col p,
+.footer-col li {
+    font-size: 0.95rem;
+    margin-bottom: 0.6rem;
+    list-style: none;
+}
+
+.footer-col ul {
+    padding: 0;
+}
+
+.footer-col a {
+    color: #94a3b8;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-col a:hover {
+    color: #4ea8de;
+}
+
+.footer-bottom {
+    max-width: 1200px;
+    margin: auto;
+    border-top: 1px solid #334155;
+    padding-top: 1.5rem;
+    text-align: center;
+    font-size: 0.85rem;
+}
+
+
+/* ==============================
+   RESPONSIVE DESIGN
+================================= */
+
+@media (max-width: 1000px) {
+    .nav-container {
+        flex-wrap: wrap;
+    }
+
+    .main-nav {
+        gap: 0.8rem;
+    }
+
+    .main-nav a {
+        font-size: 0.85rem;
+    }
+
+    .feature-grid,
+    .offers-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+@media (max-width: 768px) {
+    .site-header {
+        padding: 1rem;
+    }
+
+    .logo {
+        font-size: 1.2rem;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .main-nav {
+        display: none;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        padding: 1.5rem 0;
+    }
+
+    .main-nav.active {
+        display: flex;
+    }
+
+    .main-nav a {
+        margin: 0;
+        padding: 0.4rem 0;
+    }
+
+    .hero-section {
+        min-height: 450px;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-content p {
+        font-size: 1rem;
+    }
+
+    .content-section,
+    .packages-section,
+    .offers-section {
+        padding: 3rem 1.2rem;
+    }
+
+    .feature-grid,
+    .offers-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+
+@media (max-width: 480px) {
+    .hero-section {
+        min-height: 400px;
+    }
+
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+
+    .section-header h2 {
+        font-size: 1.8rem;
+    }
+}

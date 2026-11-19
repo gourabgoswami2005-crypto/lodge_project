@@ -1,0 +1,332 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mountain Retreat Lodge</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="nav-container">
+            <div class="logo">Mountain Retreat Lodge</div>
+            <nav class="main-nav" id="mainNav">
+                <a href="#explore">Explore</a>
+                <a href="#stay">Stay</a>
+                <a href="#dine">Dine</a>
+                <a href="#wellness">Wellness</a>
+                <a href="#offers">Offers</a>
+                <a href="{% url 'booking' %}">Book Now</a>
+                {% if user.is_authenticated %}
+                    <span class="welcome-user">
+                        Hello, {{ user.first_name|default:user.username }}
+                    </span>
+                    <a href="{% url 'logout' %}" class="btn-logout">
+                        Logout
+                    </a>
+                {% else %}
+                    <a href="{% url 'signin' %}">Sign In</a>
+                    <a href="{% url 'signup' %}" class="btn-signup">
+                        Sign Up
+                    </a>
+                {% endif %}
+            </nav>
+            <div class="header-actions">
+                <button class="lang-btn" id="langToggle">EN</button>
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+                    ☰
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <span class="hero-subtitle">WELCOME TO MOUNTAIN RETREAT</span>
+            <h1>Escape to Nature.</h1>
+            <p>
+                Experience luxurious mountain suites designed
+                for ultimate comfort and tranquility.
+            </p>
+            <a href="{% url 'booking' %}" class="hero-btn">
+                Explore Our Rooms
+            </a>
+        </div>
+    </section>
+
+    <!-- Explore & Seasonal Packages -->
+    <section class="packages-section" id="explore">
+        <div class="section-header">
+            <span class="sub-heading">Seasonal Packages &amp; Explore</span>
+            <h2>Adventure Awaits</h2>
+            <p>
+                Discover handpicked experiences curated for every
+                season, from alpine trekking to fireside evenings.
+            </p>
+        </div>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <span class="feature-tag">Guided Trails</span>
+                <h3>Ridge &amp; Pine Trekking</h3>
+                <p>
+                    Sunrise hikes along misty mountain ridges with local naturalists
+                    and hot herbal tea stops.
+                </p>
+                <a href="{% url 'booking' %}" class="text-link-btn">
+                    Plan Your Trip &rarr;
+                </a>
+            </div>
+            <div class="feature-card">
+                <span class="feature-tag">Evenings</span>
+                <h3>Bonfire &amp; Stargazing</h3>
+                <p>
+                    Clear high-altitude skies, acoustic sessions, and warm cedar
+                    bonfires after sundown.
+                </p>
+                <a href="{% url 'booking' %}" class="text-link-btn">
+                    Plan Your Trip &rarr;
+                </a>
+            </div>
+            <div class="feature-card">
+                <span class="feature-tag">Day Trips</span>
+                <h3>Valley &amp; Waterfall Tours</h3>
+                <p>
+                    Private scenic drives to hidden cascades, orchards, and quiet
+                    viewpoints around the lodge.
+                </p>
+                <a href="{% url 'booking' %}" class="text-link-btn">
+                    Plan Your Trip &rarr;
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stay Section -->
+    <section class="content-section alt-bg" id="stay">
+        <div class="section-header">
+            <span class="sub-heading">Accommodations</span>
+            <h2>Stay in Comfort</h2>
+            <p>
+                Thoughtfully crafted rooms, timber cabins, and private villas
+                built for calm mountain mornings.
+            </p>
+        </div>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <span class="feature-tag">Suites &amp; Rooms</span>
+                <h3>Deluxe &amp; Alpine Suites</h3>
+                <p>
+                    Warm wood interiors, private balconies overlooking the peaks,
+                    and plush bedding.
+                </p>
+                <a href="{% url 'booking' %}" class="text-link-btn">
+                    Book a Room &rarr;
+                </a>
+            </div>
+            <div class="feature-card">
+                <span class="feature-tag">Cabins &amp; Igloos</span>
+                <h3>Timber Cabins &amp; Glass Igloos</h3>
+                <p>
+                    Secluded stays surrounded by evergreens with panoramic views
+                    and cozy climate control.
+                </p>
+                <a href="{% url 'booking' %}" class="text-link-btn">
+                    Book a Room &rarr;
+                </a>
+            </div>
+            <div class="feature-card">
+                <span class="feature-tag">Family &amp; Chalets</span>
+                <h3>Villas &amp; Heritage Chalets</h3>
+                <p>
+                    Spacious multi-room layouts ideal for families, couples, and
+                    extended retreats.
+                </p>
+                <a href="{% url 'booking' %}" class="text-link-btn">
+                    Book a Room &rarr;
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dine Section -->
+    <section class="content-section" id="dine">
+        <div class="section-header">
+            <span class="sub-heading">Culinary Experiences</span>
+            <h2>Dine by the Peaks</h2>
+            <p>
+                Fresh, seasonal ingredients prepared daily—from hearty
+                breakfast spreads to candlelit mountain dinners.
+            </p>
+        </div>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <span class="feature-tag">All-Day Dining</span>
+                <h3>The Ridge Kitchen</h3>
+                <p>
+                    Farm-fresh regional plates, artisanal breads, and comforting
+                    classics served all day.
+                </p>
+                <a href="{% url 'booking' %}" class="text-link-btn">
+                    Reserve Your Stay &rarr;
+                </a>
+            </div>
+            <div class="feature-card">
+                <span class="feature-tag">Roastery &amp; Lounge</span>
+                <h3>Cedar Hearth Café</h3>
+                <p>
+                    Single-origin coffees, mountain infusions, and freshly baked
+                    pastries beside the fireplace.
+                </p>
+                <a href="{% url 'booking' %}" class="text-link-btn">
+                    Reserve Your Stay &rarr;
+                </a>
+            </div>
+            <div class="feature-card">
+                <span class="feature-tag">Private Dining</span>
+                <h3>Candlelit Terrace</h3>
+                <p>
+                    Curated multi-course evening menus set under lantern light with
+                    valley views.
+                </p>
+                <a href="{% url 'booking' %}" class="text-link-btn">
+                    Reserve Your Stay &rarr;
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Wellness Section -->
+    <section class="content-section alt-bg" id="wellness">
+        <div class="section-header">
+            <span class="sub-heading">Mind &amp; Body</span>
+            <h2>Spa &amp; Wellness</h2>
+            <p>
+                Restore your balance with holistic therapies, breathwork,
+                and peaceful spaces designed for deep rest.
+            </p>
+        </div>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <span class="feature-tag">Spa Therapies</span>
+                <h3>Hot Stone &amp; Deep Tissue</h3>
+                <p>
+                    Soothing massages using warm stones and botanical oils to ease
+                    travel fatigue.
+                </p>
+                <a href="{% url 'booking' %}" class="text-link-btn">
+                    Book a Getaway &rarr;
+                </a>
+            </div>
+            <div class="feature-card">
+                <span class="feature-tag">Morning Sessions</span>
+                <h3>Alpine Yoga &amp; Pranayama</h3>
+                <p>
+                    Guided stretching and mindful breathing sessions to start the
+                    day grounded.
+                </p>
+                <a href="{% url 'booking' %}" class="text-link-btn">
+                    Book a Getaway &rarr;
+                </a>
+            </div>
+            <div class="feature-card">
+                <span class="feature-tag">Thermal Recovery</span>
+                <h3>Steam, Sauna &amp; Plunge</h3>
+                <p>
+                    Unwind in aromatic steam rooms and quiet relaxation lounges
+                    after outdoor trails.
+                </p>
+                <a href="{% url 'booking' %}" class="text-link-btn">
+                    Book a Getaway &rarr;
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Offers Section -->
+    <section class="offers-section" id="offers">
+        <div class="section-header">
+            <span class="sub-heading">Special Deals</span>
+            <h2>Exclusive Offers</h2>
+            <p>
+                Make your stay even more memorable with our
+                curated promotional packages.
+            </p>
+        </div>
+        <div class="offers-grid">
+            <div class="offer-card">
+                <div class="offer-badge">Save 25%</div>
+                <div class="offer-content">
+                    <h3>Long Stay Discount</h3>
+                    <p>
+                        Book a stay for 5 nights or more and enjoy
+                        a special 25% discount on our luxury suites.
+                    </p>
+                    <a href="{% url 'booking' %}" class="text-link-btn">
+                        Claim Offer &rarr;
+                    </a>
+                </div>
+            </div>
+            <div class="offer-card">
+                <div class="offer-badge">Complimentary</div>
+                <div class="offer-content">
+                    <h3>Weekend Spa Getaway</h3>
+                    <p>
+                        Receive a complimentary 60-minute hot stone
+                        therapy session with any weekend villa booking.
+                    </p>
+                    <a href="{% url 'booking' %}" class="text-link-btn">
+                        Claim Offer &rarr;
+                    </a>
+                </div>
+            </div>
+            <div class="offer-card">
+                <div class="offer-badge">All Inclusive</div>
+                <div class="offer-content">
+                    <h3>Honeymoon Special</h3>
+                    <p>
+                        Includes daily candlelit dinners, champagne
+                        on arrival, and romantic room decoration.
+                    </p>
+                    <a href="{% url 'booking' %}" class="text-link-btn">
+                        Claim Offer &rarr;
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h4>Mountain Retreat Lodge</h4>
+                <p>Melbourne, Victoria, PIN 3002</p>
+                <p>Experience luxury surrounded by nature.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#stay">Accommodations</a></li>
+                    <li><a href="#dine">Dining</a></li>
+                    <li><a href="#wellness">Spa & Wellness</a></li>
+                    <li><a href="#offers">Special Offers</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <p>Email: reservations@mountainretreat.com</p>
+                <p>Phone: +03 (0353) 555-0192</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Mountain Retreat Lodge. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/home.js' %}"></script>
+</body>
+</html>

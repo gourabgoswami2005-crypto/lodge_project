@@ -1,0 +1,149 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Your Stay - Mountain Retreat Lodge</title>
+    <link rel="stylesheet" href="{% static 'css/booking.css' %}">
+</head>
+<body class="booking-page-body">
+
+    <!-- Professional Header -->
+    <header class="site-header static-header">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="{% url 'home' %}">Mountain Retreat Lodge</a>
+            </div>
+            <nav class="main-nav">
+                <a href="{% url 'home' %}">Home</a>
+                <a href="{% url 'booking' %}" class="active">Book Now</a>
+                
+                {% if user.is_authenticated %}
+                    <span class="welcome-text">Hello, {{ user.first_name|default:user.username }}</span>
+                    <a href="{% url 'logout' %}" class="btn-logout">Logout</a>
+                {% else %}
+                    <a href="{% url 'signin' %}">Sign In</a>
+                    <a href="{% url 'signup' %}" class="btn-signup">Sign Up</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <!-- Professional Booking Form Container -->
+    <main class="booking-page-container">
+        <div class="booking-card">
+            <div class="card-header">
+                <h2>Reserve Your Accommodation</h2>
+                <p>Fill out your details below to secure your mountain escape.</p>
+            </div>
+            
+            <form id="dedicatedBookingForm" class="professional-form">
+                
+                <div class="form-grid">
+                    <!-- Full Name -->
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" placeholder="Enter your full name" required>
+                    </div>
+
+                    <!-- Mobile Number -->
+                    <div class="form-group">
+                        <label for="mobileNumber">Mobile Number</label>
+                        <input type="tel" id="mobileNumber" placeholder="10-digit mobile number" pattern="[0-9]{10}" required>
+                    </div>
+
+                    <!-- Email ID -->
+                    <div class="form-group">
+                        <label for="emailId">Email Address</label>
+                        <input type="email" id="emailId" placeholder="name@example.com" required>
+                    </div>
+
+                    <!-- Aadhaar Card Number -->
+                    <div class="form-group">
+                        <label for="aadhaarCard">Aadhaar Card Number</label>
+                        <input type="text" id="aadhaarCard" placeholder="12-digit Aadhaar number" required>
+                    </div>
+                    
+                    <!-- Voter ID Card Number -->
+                    <div class="form-group">
+                        <label for="voterCard">Voter ID Card Number</label>
+                        <input type="text" id="voterCard" placeholder="Enter Voter ID number" required>
+                    </div>
+
+                    <!-- Room Type -->
+                    <div class="form-group">
+                        <label for="roomType">Select Room Type</label>
+                        <select id="roomType" required>
+                            <option value="" disabled selected>Choose a room...</option>
+                            <option value="deluxe">Deluxe Lodge Room</option>
+                            <option value="suite">Alpine Panorama Suite</option>
+                            <option value="cabin">Private Timber Cabin</option>
+                            <option value="igloo">Stargazer Glass Igloo</option>
+                            <option value="treehouse">Pine Needle Treehouse</option>
+                            <option value="Chalet">Royal Heritage Chalet</option>
+                            <option value="glass_pod">Cliffside Glass Pod</option>
+                            <option value="familly_villa">Valley View Family Villa</option>
+                            <option value="river_caabin">Riverfront Log Cabin</option>
+                        </select>
+                    </div>
+
+                    <!-- Check-In Date -->
+                    <div class="form-group">
+                        <label for="checkInDate">Check-In Date</label>
+                        <input type="date" id="checkInDate" required>
+                    </div>
+
+                    <!-- Check-Out Date -->
+                    <div class="form-group">
+                        <label for="checkOutDate">Check-Out Date</label>
+                        <input type="date" id="checkOutDate" required>
+                    </div>
+                </div>
+
+                <div class="form-row-full">
+                    <!-- Guest Selector Dropdown -->
+                    <div class="form-group">
+                        <label>Guests</label>
+                        <div class="guest-selector-container">
+                            <div id="guestDisplay" class="guest-display">2 Adults, 0 Children</div>
+                            
+                            <div id="guestDropdown" class="guest-dropdown hidden">
+                                <div class="guest-row">
+                                    <span>Adults</span>
+                                    <div class="counter-controls">
+                                        <button type="button" onclick="updateGuests('adults', -1)">-</button>
+                                        <span id="adultCount">2</span>
+                                        <button type="button" onclick="updateGuests('adults', 1)">+</button>
+                                    </div>
+                                </div>
+                                <div class="guest-row">
+                                    <span>Children</span>
+                                    <div class="counter-controls">
+                                        <button type="button" onclick="updateGuests('children', -1)">-</button>
+                                        <span id="childCount">0</span>
+                                        <button type="button" onclick="updateGuests('children', 1)">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Room Climate -->
+                    <div class="form-group">
+                        <label for="acPreference">Room Climate</label>
+                        <select id="acPreference">
+                            <option value="AC" selected>Air Conditioned (AC)</option>
+                            <option value="Non-AC">Non-Air Conditioned (Non-AC)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="book-now-btn">Confirm Reservation</button>
+            </form>
+        </div>
+    </main>
+
+    <script src="{% static 'js/book.js' %}"></script>
+</body>
+</html>

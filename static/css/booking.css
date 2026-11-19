@@ -1,0 +1,273 @@
+/* ==============================
+   BOOKING PAGE & GLASSMORPHISM
+================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.booking-page-body {
+    background-image: url('../images/book.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+/* Fixed Professional Header Styles */
+.site-header.static-header {
+    background-color: #1b263b;
+    color: #ffffff;
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.nav-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.main-nav a {
+    color: #cbd5e1;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.main-nav a:hover, .main-nav a.active {
+    color: #4ea8de;
+}
+
+.welcome-text {
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.btn-signup {
+    background-color: #4ea8de !important;
+    color: #ffffff !important;
+    padding: 0.5rem 1.1rem;
+    border-radius: 4px;
+    transition: background 0.2s !important;
+}
+
+.btn-signup:hover {
+    background-color: #3895c7 !important;
+}
+
+.btn-logout {
+    color: #ff6b6b !important;
+}
+
+/* Booking Card Container */
+.booking-page-container {
+    max-width: 850px;
+    margin: 2.5rem auto;
+    padding: 0 1rem;
+}
+
+.booking-card {
+    background: rgba(15, 23, 42, 0.65); /* Dark frosted glass card */
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    color: #ffffff;
+}
+
+.card-header {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.card-header h2 {
+    font-size: 2rem;
+    color: #ffffff;
+    margin-bottom: 0.4rem;
+}
+
+.card-header p {
+    color: #94a3b8;
+    font-size: 1rem;
+}
+
+/* Professional Grid Layout for Form Inputs */
+.professional-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+}
+
+.form-row-full {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.form-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #cbd5e1;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-group input, 
+.form-group select, 
+.guest-display {
+    padding: 0.8rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    font-size: 0.95rem;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #0f172a;
+    outline: none;
+    transition: all 0.2s;
+}
+
+.form-group input:focus, 
+.form-group select:focus,
+.guest-display:focus {
+    border-color: #4ea8de;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(78, 168, 222, 0.25);
+}
+
+/* Guest Dropdown Styling */
+.guest-selector-container {
+    position: relative;
+}
+
+.guest-display {
+    cursor: pointer;
+    user-select: none;
+}
+
+.guest-dropdown {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    padding: 1rem;
+    z-index: 100;
+    color: #0f172a;
+}
+
+.guest-dropdown.hidden {
+    display: none !important;
+}
+
+.guest-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+}
+
+.guest-row:not(:last-child) {
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.counter-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.counter-controls button {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid #4ea8de;
+    background: #fff;
+    color: #4ea8de;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.counter-controls button:hover {
+    background: #4ea8de;
+    color: #fff;
+}
+
+.counter-controls span {
+    font-weight: 600;
+    min-width: 20px;
+    text-align: center;
+}
+
+/* Submit Action Button */
+.book-now-btn {
+    margin-top: 1.5rem;
+    width: 100%;
+    padding: 1rem;
+    background-color: #4ea8de;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    box-shadow: 0 4px 15px rgba(78, 168, 222, 0.4);
+}
+
+.book-now-btn:hover {
+    background-color: #3895c7;
+    transform: translateY(-2px);
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .form-grid, .form-row-full {
+        grid-template-columns: 1fr;
+    }
+}
