@@ -20,6 +20,9 @@
                 <a href="#offers">Offers</a>
                 <a href="{% url 'booking' %}">Book Now</a>
                 {% if user.is_authenticated %}
+                    {% if user.is_superuser %}
+                        <a href="{% url 'manage_lodge' %}">Manage Lodge</a>
+                    {% endif %}
                     <span class="welcome-user">
                         Hello, {{ user.first_name|default:user.username }}
                     </span>
@@ -116,39 +119,31 @@
             </p>
         </div>
         <div class="feature-grid">
-            <div class="feature-card">
-                <span class="feature-tag">Suites &amp; Rooms</span>
-                <h3>Deluxe &amp; Alpine Suites</h3>
-                <p>
-                    Warm wood interiors, private balconies overlooking the peaks,
-                    and plush bedding.
-                </p>
-                <a href="{% url 'booking' %}" class="text-link-btn">
-                    Book a Room &rarr;
-                </a>
-            </div>
-            <div class="feature-card">
-                <span class="feature-tag">Cabins &amp; Igloos</span>
-                <h3>Timber Cabins &amp; Glass Igloos</h3>
-                <p>
-                    Secluded stays surrounded by evergreens with panoramic views
-                    and cozy climate control.
-                </p>
-                <a href="{% url 'booking' %}" class="text-link-btn">
-                    Book a Room &rarr;
-                </a>
-            </div>
-            <div class="feature-card">
-                <span class="feature-tag">Family &amp; Chalets</span>
-                <h3>Villas &amp; Heritage Chalets</h3>
-                <p>
-                    Spacious multi-room layouts ideal for families, couples, and
-                    extended retreats.
-                </p>
-                <a href="{% url 'booking' %}" class="text-link-btn">
-                    Book a Room &rarr;
-                </a>
-            </div>
+            {% for room in rooms %}
+                <div class="feature-card">
+                    <span class="feature-tag">{{ room.category_tag|default:"Suites & Rooms" }}</span>
+                    <h3>{{ room.name }}</h3>
+                    <p><strong>₹{{ room.price_per_night }}</strong> / night &bull; Up to {{ room.max_guests }} guests</p>
+                    {% if room.description %}
+                        <p>{{ room.description }}</p>
+                    {% endif %}
+                    <a href="{% url 'booking' %}?room={{ room.name|urlencode }}" class="text-link-btn">
+                        Book a Room &rarr;
+                    </a>
+                </div>
+            {% empty %}
+                <div class="feature-card">
+                    <span class="feature-tag">Accommodations</span>
+                    <h3>Rooms Being Updated</h3>
+                    <p>
+                        New room types and nightly rates will appear here once added
+                        from the lodge manager.
+                    </p>
+                    <a href="{% url 'booking' %}" class="text-link-btn">
+                        Book a Room &rarr;
+                    </a>
+                </div>
+            {% endfor %}
         </div>
     </section>
 
@@ -257,45 +252,31 @@
             </p>
         </div>
         <div class="offers-grid">
-            <div class="offer-card">
-                <div class="offer-badge">Save 25%</div>
-                <div class="offer-content">
-                    <h3>Long Stay Discount</h3>
-                    <p>
-                        Book a stay for 5 nights or more and enjoy
-                        a special 25% discount on our luxury suites.
-                    </p>
-                    <a href="{% url 'booking' %}" class="text-link-btn">
-                        Claim Offer &rarr;
-                    </a>
+            {% for offer in offers %}
+                <div class="offer-card">
+                    <div class="offer-badge">{{ offer.badge_text }}</div>
+                    <div class="offer-content">
+                        <h3>{{ offer.title }}</h3>
+                        <p>{{ offer.description }}</p>
+                        <a href="{% url 'booking' %}?offer={{ offer.title|urlencode }}" class="text-link-btn">
+                            Claim Offer &rarr;
+                        </a>
+                    </div>
                 </div>
-            </div>
-            <div class="offer-card">
-                <div class="offer-badge">Complimentary</div>
-                <div class="offer-content">
-                    <h3>Weekend Spa Getaway</h3>
-                    <p>
-                        Receive a complimentary 60-minute hot stone
-                        therapy session with any weekend villa booking.
-                    </p>
-                    <a href="{% url 'booking' %}" class="text-link-btn">
-                        Claim Offer &rarr;
-                    </a>
+            {% empty %}
+                <div class="offer-card">
+                    <div class="offer-content">
+                        <h3>Seasonal Deals Coming Soon</h3>
+                        <p>
+                            New promotional packages and seasonal discounts will
+                            appear here once added from the lodge manager.
+                        </p>
+                        <a href="{% url 'booking' %}" class="text-link-btn">
+                            Book Now &rarr;
+                        </a>
+                    </div>
                 </div>
-            </div>
-            <div class="offer-card">
-                <div class="offer-badge">All Inclusive</div>
-                <div class="offer-content">
-                    <h3>Honeymoon Special</h3>
-                    <p>
-                        Includes daily candlelit dinners, champagne
-                        on arrival, and romantic room decoration.
-                    </p>
-                    <a href="{% url 'booking' %}" class="text-link-btn">
-                        Claim Offer &rarr;
-                    </a>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </section>
 

@@ -1,0 +1,194 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Rooms &amp; Offers | Mountain Retreat Lodge</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <style>
+        .manage-wrap {
+            max-width: 1100px;
+            margin: 2.5rem auto 4rem;
+            padding: 0 1.5rem;
+        }
+        .manage-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .manage-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        .panel-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.75rem;
+            box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
+        }
+        .panel-card h2 {
+            color: #1b263b;
+            margin-bottom: 1.25rem;
+            font-size: 1.35rem;
+        }
+        .field-row {
+            margin-bottom: 1rem;
+        }
+        .field-row label {
+            display: block;
+            font-weight: 600;
+            color: #1b263b;
+            margin-bottom: 0.35rem;
+            font-size: 0.9rem;
+        }
+        .field-row input[type="text"],
+        .field-row input[type="number"],
+        .field-row textarea {
+            width: 100%;
+            padding: 0.65rem 0.8rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+        .submit-btn {
+            background: #2585bd;
+            color: #fff;
+            border: none;
+            padding: 0.75rem 1.35rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .submit-btn:hover {
+            background: #1b263b;
+        }
+        .msg-banner {
+            background: #dcfce7;
+            color: #166534;
+            padding: 0.85rem 1.1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+        .list-box {
+            margin-top: 1rem;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 1rem;
+        }
+        .list-item {
+            padding: 0.6rem 0;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.92rem;
+            color: #334155;
+        }
+        .status-tag {
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 0.15rem 0.5rem;
+            border-radius: 999px;
+            background: #e2e8f0;
+            color: #334155;
+            margin-left: 0.35rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="nav-container">
+            <div class="logo">Mountain Retreat Lodge</div>
+            <nav class="main-nav">
+                <a href="{% url 'home' %}">View Home Page</a>
+                <a href="{% url 'manage_lodge' %}">Manage Rooms &amp; Offers</a>
+                <a href="{% url 'logout' %}" class="btn-logout">Logout</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="manage-wrap">
+        <div class="manage-top">
+            <div>
+                <h1>Lodge Manager</h1>
+                <p>Add room types with prices and promotional offers—changes appear live on the home page.</p>
+            </div>
+            <a href="{% url 'home' %}" class="hero-btn">See Live Home Page &rarr;</a>
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="msg-banner">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="manage-grid">
+            <!-- Add Room Type & Price -->
+            <section class="panel-card">
+                <h2>Add Room Type &amp; Price</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="form_type" value="add_room">
+                    {% for field in room_form %}
+                        <div class="field-row">
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.errors %}
+                                <small style="color: #dc2626;">{{ field.errors|striptags }}</small>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="submit-btn">Save Room Type</button>
+                </form>
+
+                <div class="list-box">
+                    <strong>Current Room Types ({{ rooms|length }})</strong>
+                    {% for room in rooms %}
+                        <div class="list-item">
+                            <strong>{{ room.name }}</strong> &mdash; ₹{{ room.price_per_night }}/night ({{ room.category_tag }})
+                            <span class="status-tag">{% if room.is_available %}Available{% else %}Hidden{% endif %}</span>
+                        </div>
+                    {% empty %}
+                        <div class="list-item">No rooms added yet.</div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <!-- Add Offer -->
+            <section class="panel-card">
+                <h2>Add Promotional Offer</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="form_type" value="add_offer">
+                    {% for field in offer_form %}
+                        <div class="field-row">
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.errors %}
+                                <small style="color: #dc2626;">{{ field.errors|striptags }}</small>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="submit-btn">Save Offer</button>
+                </form>
+
+                <div class="list-box">
+                    <strong>Current Offers ({{ offers|length }})</strong>
+                    {% for offer in offers %}
+                        <div class="list-item">
+                            <strong>{{ offer.title }}</strong> &mdash; <span style="color: #2585bd;">{{ offer.badge_text }}</span>
+                            <span class="status-tag">{% if offer.is_active %}Active{% else %}Inactive{% endif %}</span>
+                        </div>
+                    {% empty %}
+                        <div class="list-item">No offers added yet.</div>
+                    {% endfor %}
+                </div>
+            </section>
+        </div>
+    </main>
+</body>
+</html>

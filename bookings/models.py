@@ -1,30 +1,35 @@
 from django.db import models
 
-# Create your models here.
 
-from django.db import models
-                                                                      
-class Room(models.Model):                                           
-    ROOM_TYPES = [
-        ('deluxe', 'Deluxe Lodge Room'),
-        ('suite', 'Alpine Panorama Suite'),
-        ('cabin', 'Private Timber Cabin'),
-        ('igloo', 'Stargazer Glass Igloo'),
-        ('treehouse', 'Pine Needle Treehouse'),
-        ('chalet', 'Royal Heritage Chalet'),
-        ('glass_pod', 'Cliffside Glass Pod'),
-        ('family_villa', 'Valley View Family Villa'),
-        ('river_cabin', 'Riverfront Log Cabin'),
-    ]
-    
-    room_name = models.CharField(max_length=50, choices=ROOM_TYPES, unique=True)
-    base_price_per_night = models.DecimalField(max_digits=8, decimal_places=2)
-    max_adults = models.PositiveIntegerField(default=2)
-    max_children = models.PositiveIntegerField(default=1)
+class RoomType(models.Model):
+    name = models.CharField(max_length=120)
+    category_tag = models.CharField(max_length=80, default="Suites & Rooms")
+    price_per_night = models.DecimalField(max_digits=10, decimal_places=2)
     description = models.TextField()
+    max_guests = models.PositiveIntegerField(default=2)
+    is_available = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_at"]
 
     def __str__(self):
-        return f"{self.get_room_name_display()} - ₹{self.base_price_per_night}/night"
+        return f"{self.name} - ₹{self.price_per_night}"
+
+
+class Offer(models.Model):
+    badge_text = models.CharField(max_length=50)
+    title = models.CharField(max_length=140)
+    description = models.TextField()
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"{self.title} ({self.badge_text})"
+
 
 class Reservation(models.Model):
     CLIMATE_TYPES = [
@@ -41,7 +46,7 @@ class Reservation(models.Model):
     check_out_date = models.DateField()
     adults = models.PositiveIntegerField(default=2)
     children = models.PositiveIntegerField(default=0)
-    room_type = models.CharField(max_length=20)
+    room_type = models.CharField(max_length=120)
     ac_preference = models.CharField(max_length=10, choices=CLIMATE_TYPES, default='AC')
     total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     created_at = models.DateTimeField(auto_now_add=True)

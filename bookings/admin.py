@@ -1,13 +1,20 @@
 from django.contrib import admin
+from .models import RoomType, Offer, Reservation
 
-# Register your models here.
 
-from django.contrib import admin
-from .models import Room, Reservation
+@admin.register(RoomType)
+class RoomTypeAdmin(admin.ModelAdmin):
+    list_display = ('name', 'category_tag', 'price_per_night', 'max_guests', 'is_available')
+    list_editable = ('price_per_night', 'is_available')
+    search_fields = ('name', 'category_tag')
 
-@admin.register(Room)
-class RoomAdmin(admin.ModelAdmin):
-    list_display = ('get_room_name_display', 'base_price_per_night', 'max_adults')
+
+@admin.register(Offer)
+class OfferAdmin(admin.ModelAdmin):
+    list_display = ('title', 'badge_text', 'is_active')
+    list_editable = ('is_active',)
+    search_fields = ('title', 'badge_text')
+
 
 @admin.register(Reservation)
 class ReservationAdmin(admin.ModelAdmin):

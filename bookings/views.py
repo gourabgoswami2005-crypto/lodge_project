@@ -3,20 +3,66 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 from datetime import datetime
-from .models import Room, Reservation
+from .models import RoomType, Reservation, Offer
+from .forms import RoomTypeForm, OfferForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import user_passes_test
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
 
+
+def is_admin_user(user):
+    return user.is_authenticated and user.is_superuser
+
+
 def home_view(request):
-    rooms = Room.objects.all()
-    return render(request, 'home.html', {'rooms': rooms})
+    rooms = RoomType.objects.filter(is_available=True)
+    offers = Offer.objects.filter(is_active=True)
+    return render(request, 'home.html', {
+        'rooms': rooms,
+        'offers': offers,
+    })
+
 
 def booking_view(request):
-    rooms = Room.objects.all()
+    rooms = RoomType.objects.filter(is_available=True)
     return render(request, 'booking.html', {'rooms': rooms})
+
+
+@user_passes_test(is_admin_user, login_url='signin')
+def manage_lodge_view(request):
+    room_form = RoomTypeForm(prefix='room')
+    offer_form = OfferForm(prefix='offer')
+
+    if request.method == 'POST':
+        form_type = request.POST.get('form_type')
+
+        if form_type == 'add_room':
+            room_form = RoomTypeForm(request.POST, prefix='room')
+            if room_form.is_valid():
+                room_form.save()
+                messages.success(request, 'New room type and price added!')
+                return redirect('manage_lodge')
+
+        elif form_type == 'add_offer':
+            offer_form = OfferForm(request.POST, prefix='offer')
+            if offer_form.is_valid():
+                offer_form.save()
+                messages.success(request, 'New offer added!')
+                return redirect('manage_lodge')
+
+    rooms = RoomType.objects.all()
+    offers = Offer.objects.all()
+
+    return render(request, 'manage.html', {
+        'room_form': room_form,
+        'offer_form': offer_form,
+        'rooms': rooms,
+        'offers': offers,
+    })
+
 
 @csrf_exempt  # <-- Add this decorator to disable CSRF blocking for API POST requests
 def book_room_api(request):
@@ -39,16 +85,16 @@ def book_room_api(request):
             d1 = datetime.strptime(check_in_str, '%Y-%m-%d')
             d2 = datetime.strptime(check_out_str, '%Y-%m-%d')
             nights = (d2 - d1).days
-            
+
             if nights <= 0:
                 return JsonResponse({'status': 'error', 'message': 'Invalid stay duration. Check-out must be after check-in.'}, status=400)
 
             try:
-                room = Room.objects.get(room_name=room_type)
-            except Room.DoesNotExist:
+                room = RoomType.objects.get(name=room_type, is_available=True)
+            except RoomType.DoesNotExist:
                 return JsonResponse({'status': 'error', 'message': 'Selected room type does not exist.'}, status=400)
 
-            total_price = float(room.base_price_per_night) * nights
+            total_price = float(room.price_per_night) * nights
 
             reservation = Reservation.objects.create(
                 full_name=full_name,
@@ -84,17 +130,18 @@ def book_room_api(request):
                     )
                 except Exception as e:
                     print(f"Booking email error: {e}")
-            
+
             return JsonResponse({
-                'status': 'success', 
-                'booking_id': reservation.id, 
+                'status': 'success',
+                'booking_id': reservation.id,
                 'total_price': total_price
             })
-            
+
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
-            
+
     return JsonResponse({'status': 'error', 'message': 'Invalid HTTP method'}, status=405)
+
 
 # user login/signup
 
@@ -111,7 +158,7 @@ def signup_view(request):
         # Create user using email as the username for clean login handling
         user = User.objects.create_user(username=email, email=email, password=password, first_name=name)
         user.save()
-        
+
         # --- SEND EMAIL NOTIFICATION FOR SIGN UP ---
         try:
             # Email to User
@@ -133,8 +180,9 @@ def signup_view(request):
 
         messages.success(request, 'Account created successfully! Please sign in.')
         return redirect('signin')
-        
+
     return render(request, 'signup.html')
+
 
 def signin_view(request):
     if request.method == 'POST':
@@ -146,7 +194,7 @@ def signin_view(request):
 
         if user is not None:
             login(request, user)
-            
+
             # --- SEND EMAIL NOTIFICATION FOR LOGIN ---
             try:
                 # Email to User
@@ -172,6 +220,7 @@ def signin_view(request):
             return redirect('signin')
 
     return render(request, 'signin.html')
+
 
 def logout_view(request):
     logout(request)
